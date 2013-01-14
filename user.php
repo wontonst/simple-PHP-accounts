@@ -19,8 +19,8 @@ class User {
      */
     private $data;
 
-    public function __construct() {
-
+    public function __construct($data) {
+$this->data = $data;
     }
     /**
       Retrieves data in $this->data
@@ -50,11 +50,9 @@ class User {
     private static function login($query)
     {
         $sql=User::connect();
-echo "\n".$query."\n";
         $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
         if ($results->num_rows != 1) return false;
-        var_dump('Line:'.__LINE__.$results->fetch_all(MYSQLI_ASSOC));
-        return true;
+        return new User($results->fetch_assoc());
     }
     public function getNewSession()
     {
@@ -108,6 +106,7 @@ echo "\n".$query."\n";
         return $sql;
     }
 }
+
 //User::create('royzhe','mypassword','m@gmail.com');
 var_dump(User::loginPassword('royzhe','mypassword'));
 ?>
