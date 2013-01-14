@@ -1,5 +1,5 @@
 <?php
-namespace Entities\User;
+namespace Accounts\Entities;
 
 /**
 Stores information about a user.
@@ -17,13 +17,6 @@ Contains the following keys. Not all of them may be set.
 </ul>
 */
 private $data;
-/**
-Metadata is stored here. The following may be set.
-<ul>
-ideas - array of ideas
-projects - array of projects
-</ul>
-*/
 private $meta;
 public function __construct()
 {
