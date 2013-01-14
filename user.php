@@ -20,7 +20,7 @@ class User {
     private $data;
 
     public function __construct() {
-        
+
     }
     /**
       Retrieves data in $this->data
@@ -38,28 +38,29 @@ class User {
       @param $p password
      */
     public static function loginPassword($u, $p) {
-$password = User::hash($p);
-$query = 'SELECT * FROM users WHERE usr=\''.$u.'\' AND pwd=\''.$password.'\';';
-return User::login($query);
+        $password = User::hash($p);
+        $query = 'SELECT * FROM users WHERE usr=\''.$u.'\' AND pwd=\''.$password.'\';';
+        echo $query;
+        return User::login($query);
     }
-public static function loginSession($u,$s)
-{
-$query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND session=\''.$s.'\';';
-return User::login($query);
-}
-private static function login($query)
-{
-$sql=User::connect();
-$results = $sql->query($query) or die('MySQL Error: ' . $sql->connect_error);
-if ($results->num_rows != 1) return false;
-var_dumpe($results);
-return true;
-}
-public function getNewSession()
-{
-$sql=User::connect();
-$query =
-}
+    public static function loginSession($u,$s)
+    {
+        $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND session=\''.$s.'\';';
+        return User::login($query);
+    }
+    private static function login($query)
+    {
+        $sql=User::connect();
+        $results = $sql->query($sql->real_escape_string($query)) or die('MySQL Error: ' . $sql->error);
+        if ($results->num_rows != 1) return false;
+        var_dump('Line:'.__LINE__.$results);
+        return true;
+    }
+    public function getNewSession()
+    {
+        $sql=User::connect();
+//$query =
+    }
 
     /**
       Changes the user's password.
@@ -68,7 +69,7 @@ $query =
       @param $np new password
      */
     public function changePassword($u, $op, $np) {
-        
+
     }
 
     /**
@@ -78,35 +79,35 @@ $query =
       @param $e email (optional)
      */
     public static function create($u, $p, $e) {
-$sql = User::connect();        
-if ($sql->connect_errno)
-            die('Failed to connect to MySQL: ' . $mysqli->connect_error);
-if(User::checkUsername())//if user is taken
+        $sql = User::connect();
+        if(User::checkUsername($sql,$u))//if user is taken
             throw new Exception('User creation failed: User already exists');
 
-        $password = User::hash($p);
+        $password = $sql->real_escape_string(User::hash($p));
         $email = isset($e) ? $e : 'null';
         $query = 'INSERT INTO users (usr,pwd,email)
-               VALUES (\'' . $u . '\',\'' . $password . '\',\'' . $email . '\');';
-        $sql->query($query) or die('MySQL Error: ' . $sql->connect_error);
+                 VALUES (\'' . $u . '\',\'' . $password . '\',\'' . $email . '\');';
+        $sql->query($query) or die('MySQL Error: ' . $sql->error);
     }
 
     public static function hash($value) {
         global $salt;
         return crypt($value, $salt);
     }
-public static function checkUsername($sql){
-        $query = 'SELECT * FROM users WHERE usr=\''.$u.'\';';
-        $results = $sql->query($query) or die('MySQL Error: ' . $sql->connect_error);
-        return ($results->num_rows != 0)
-}
-public static function connect()
-{
+    public static function checkUsername($sql,$username) {
+        $query = 'SELECT * FROM users WHERE usr=\''.$username.'\';';
+        $results = $sql->query($query) or die('MySQL Error: ' . $sql->error);
+        return ($results->num_rows != 0);
+    }
+    public static function connect()
+    {
         global $database_name, $mysql_server, $mysql_username, $mysql_password;
         $sql = new mysqli($mysql_server, $mysql_username, $mysql_password,$database_name);
-return $sql;
+        if ($sql->connect_errno)
+            die('Failed to connect to MySQL: ' . $mysqli->connect_error);
+        return $sql;
+    }
 }
-}
-
-User::login('royz','mypassword');
+//User::create('royzhe','mypassword','m@gmail.com');
+var_dump(User::loginPassword('royzhe','mypassword'));
 ?>
