@@ -46,7 +46,10 @@ class User {
     public static function loginSession($u,$s)
     {
         $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND session=\''.$s.'\';';
-        return User::login($query);
+        if(!$v = User::login($query))return false;
+if(time()-$v->session > $sessiontimeout)return false;
+return $v;
+
     }
     private static function login($query)
     {
@@ -114,7 +117,9 @@ class User {
 }
 
 //User::create('royzhe','mypassword','m@gmail.com');
-$user = User::loginPassword('royzhe','mypassword');
+//$user = User::loginPassword('royzhe','mypassword');
+//var_dump($user);
+//var_dump($user->newSession());
+$user = User::loginSession('royzhe','1c94b8682a80716b7323e0e767f03a9e');
 var_dump($user);
-var_dump($user->newSession());
 ?>
