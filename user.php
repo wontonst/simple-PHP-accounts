@@ -39,8 +39,7 @@ class User {
      */
     public static function loginPassword($u, $p) {
         $password = User::hash($p);
-        $query = 'SELECT * FROM users WHERE usr=\''.$u.'\' AND pwd=\''.$password.'\';';
-        echo $query;
+        $query = 'SELECT * FROM users WHERE usr=\'royz\'';// WHERE '."usr='$u';";// AND `pwd`='$password';";
         return User::login($query);
     }
     public static function loginSession($u,$s)
@@ -51,9 +50,10 @@ class User {
     private static function login($query)
     {
         $sql=User::connect();
-        $results = $sql->query($sql->real_escape_string($query)) or die('MySQL Error: ' . $sql->error);
+echo "\n".$query."\n";
+        $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
         if ($results->num_rows != 1) return false;
-        var_dump('Line:'.__LINE__.$results);
+        var_dump('Line:'.__LINE__.$results->fetch_all(MYSQLI_ASSOC));
         return true;
     }
     public function getNewSession()
