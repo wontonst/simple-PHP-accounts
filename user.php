@@ -18,9 +18,10 @@ class User {
       </ul>
      */
     private $data;
-
-    public function __construct($data) {
+private $sql;///<sql connection
+    private function __construct($data,&$sql) {
         $this->data = $data;
+$this->sql=$sql;
     }
     /**
       Retrieves data in $this->data
@@ -52,12 +53,17 @@ class User {
         $sql=User::connect();
         $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
         if ($results->num_rows != 1) return false;
-        return new User($results->fetch_assoc());
+        return new User($results->fetch_assoc(),$sql);
     }
-    public function getNewSession()
+    public function newSession()
     {
-        $sql=User::connect();
-//$query =
+global $salt;
+$session = md5($this->data['usr'].time().$salt);
+$time = time();
+$usr = $this->data['usr'];
+$query='UPDATE users SET `session`'."='$time', `sessionID`='$session' WHERE `usr`='$usr'";
+$this->sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $this->sql->error);
+return $session;
     }
 
     /**
@@ -108,5 +114,7 @@ class User {
 }
 
 //User::create('royzhe','mypassword','m@gmail.com');
-var_dump(User::loginPassword('royzhe','mypassword'));
+$user = User::loginPassword('royzhe','mypassword');
+var_dump($user);
+var_dump($user->newSession());
 ?>

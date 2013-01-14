@@ -8,7 +8,7 @@ $query2=<<<QUERY
             `pwd` varchar(80) NOT NULL,
             `email` varchar(20) NOT NULL,
             `session` int(11) NOT NULL,
-            `sessionID` varchar(80) NOT NULL,
+            `sessionID` varchar(40) NOT NULL,
             `metadata` longtext NOT NULL,
             PRIMARY KEY (`usr`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
