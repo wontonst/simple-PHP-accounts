@@ -20,17 +20,17 @@ class User {
     private $data;
     private $sql;///<sql connection
     private function __construct($data,&$sql) {
-        $this->data = $data;
+        $this->data = (array)$data;
         $this->sql=$sql;
     }
     /**
       Retrieves data in $this->data
      */
     public function __get($value) {
-        if (isset($this->data['$value']))
-            return $this->data['$value'];
+        if (isset($this->data[$value]))
+            return $this->data[$value];
         else
-            throw new Exception("User: cannot __get($value) because it does not exist in $this->data");
+            throw new Exception('User: cannot __get('.$value.') because it does not exist in $this->data'.print_r($this->data));
     }
 
     /**
@@ -45,9 +45,9 @@ class User {
     }
     public static function loginSession($u,$s)
     {
-        $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND session=\''.$s.'\';';
+global $sessiontimeout;
+        $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND sessionID=\''.$s.'\';';
         if(!$v = User::login($query))return false;
-var_dump($v);
 if(time()-$v->session > $sessiontimeout)return false;
 return $v;
 
@@ -120,9 +120,9 @@ echo $results->num_rows;
 }
 
 //User::create('roymanz','mypasswords','m@gmail.com');
-$user = User::loginPassword('royman','mypasswords');
-var_dump($user);
+//$user = User::loginPassword('roymanz','mypasswords');
+//var_dump($user);
 //var_dump($user->newSession());
-//$user = User::loginSession('royzhe','f1220f51063673f34ba029c4aa4c6bf8');
+//$user = User::loginSession('roymanz','d3de8305f93266526703f35e94e8c6d3');
 //var_dump($user);
 ?>
