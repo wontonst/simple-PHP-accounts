@@ -3,15 +3,15 @@ require_once('config.php');
 
 $query1="CREATE DATABASE `$database_name` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;";
 $query2=<<<QUERY
-CREATE TABLE IF NOT EXISTS `users` (
-  `usr` varchar(20) NOT NULL,
-  `pwd` varchar(80) NOT NULL,
-  `email` varchar(20) NOT NULL,
-  `session` int(11) NOT NULL,
-  `sessionID` varchar(80) NOT NULL,
-  `metadata` longtext NOT NULL,
-  PRIMARY KEY (`usr`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+        CREATE TABLE IF NOT EXISTS `users` (
+            `usr` varchar(20) NOT NULL,
+            `pwd` varchar(80) NOT NULL,
+            `email` varchar(20) NOT NULL,
+            `session` int(11) NOT NULL,
+            `sessionID` varchar(80) NOT NULL,
+            `metadata` longtext NOT NULL,
+            PRIMARY KEY (`usr`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 QUERY;
 
 //die($query1);
@@ -21,7 +21,7 @@ if($connection->connect_errno)die('Failed to connect to MySQL: '.$mysqli->connec
 
 echo 'Creating database...';
 $connection->query($query1);
-echo "done\n"; 
+echo "done\n";
 echo 'Creating tables...';
 $connection->select_db($database_name);
 if(!$connection->query($query2))die($connection->connect_error);
