@@ -5,7 +5,7 @@ $query1="CREATE DATABASE `$database_name` DEFAULT CHARACTER SET latin1 COLLATE l
 $query2=<<<QUERY
         CREATE TABLE IF NOT EXISTS `users` (
             `usr` varchar(20) NOT NULL,
-            `pwd` varchar(80) NOT NULL,
+            `pwd` varchar(100) NOT NULL,
             `email` varchar(20) NOT NULL,
             `session` int(11) NOT NULL,
             `sessionID` varchar(40) NOT NULL,

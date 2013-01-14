@@ -13,7 +13,7 @@ class User {
       <li>usr</li>
       <li>pwd</li>
       <li>email</li>
-      <li>sessiontime</li>
+      <li>session</li>
       <li>sessionid</li>
       </ul>
      */
@@ -30,7 +30,7 @@ class User {
         if (isset($this->data['$value']))
             return $this->data['$value'];
         else
-            throw new Exception("User: cannot __get($value) because it does not exist in $this-.data");
+            throw new Exception("User: cannot __get($value) because it does not exist in $this->data");
     }
 
     /**
@@ -40,13 +40,14 @@ class User {
      */
     public static function loginPassword($u, $p) {
         $password = User::hash($p);
-        $query = 'SELECT * FROM users WHERE usr=\'royz\'';// WHERE '."usr='$u';";// AND `pwd`='$password';";
+        $query = 'SELECT * FROM users WHERE '."usr='$u' AND `pwd`='$password';";
         return User::login($query);
     }
     public static function loginSession($u,$s)
     {
         $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND session=\''.$s.'\';';
         if(!$v = User::login($query))return false;
+var_dump($v);
 if(time()-$v->session > $sessiontimeout)return false;
 return $v;
 
@@ -55,6 +56,8 @@ return $v;
     {
         $sql=User::connect();
         $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
+echo $query;
+echo $results->num_rows;
         if ($results->num_rows != 1) return false;
         return new User($results->fetch_assoc(),$sql);
     }
@@ -99,7 +102,7 @@ return $v;
 
     public static function hash($value) {
         global $salt;
-        return crypt($value, $salt);
+        return addslashes(crypt($value, $salt));
     }
     public static function checkUsername($sql,$username) {
         $query = 'SELECT * FROM users WHERE usr=\''.$username.'\';';
@@ -116,10 +119,10 @@ return $v;
     }
 }
 
-//User::create('royzhe','mypassword','m@gmail.com');
-//$user = User::loginPassword('royzhe','mypassword');
-//var_dump($user);
-//var_dump($user->newSession());
-$user = User::loginSession('royzhe','1c94b8682a80716b7323e0e767f03a9e');
+//User::create('roymanz','mypasswords','m@gmail.com');
+$user = User::loginPassword('royman','mypasswords');
 var_dump($user);
+//var_dump($user->newSession());
+//$user = User::loginSession('royzhe','f1220f51063673f34ba029c4aa4c6bf8');
+//var_dump($user);
 ?>
