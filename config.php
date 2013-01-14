@@ -9,4 +9,5 @@ $mysql_password='';//your password
 
 //OTHER INFORMATION
 $salt = '$6$s%3F81@o$';//password hashing salt
+$sessiontimeout = 79200;//session expiration in seconds (79200 = 24hrs)
 ?>
