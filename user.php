@@ -18,10 +18,10 @@ class User {
       </ul>
      */
     private $data;
-private $sql;///<sql connection
+    private $sql;///<sql connection
     private function __construct($data,&$sql) {
         $this->data = $data;
-$this->sql=$sql;
+        $this->sql=$sql;
     }
     /**
       Retrieves data in $this->data
@@ -57,13 +57,13 @@ $this->sql=$sql;
     }
     public function newSession()
     {
-global $salt;
-$session = md5($this->data['usr'].time().$salt);
-$time = time();
-$usr = $this->data['usr'];
-$query='UPDATE users SET `session`'."='$time', `sessionID`='$session' WHERE `usr`='$usr'";
-$this->sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $this->sql->error);
-return $session;
+        global $salt;
+        $session = md5($this->data['usr'].time().$salt);
+        $time = time();
+        $usr = $this->data['usr'];
+        $query='UPDATE users SET `session`'."='$time', `sessionID`='$session' WHERE `usr`='$usr'";
+        $this->sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $this->sql->error);
+        return $session;
     }
 
     /**
