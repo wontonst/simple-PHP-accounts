@@ -20,7 +20,7 @@ class User {
     private $data;
 
     public function __construct($data) {
-$this->data = $data;
+        $this->data = $data;
     }
     /**
       Retrieves data in $this->data
