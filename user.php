@@ -45,19 +45,19 @@ class User {
     }
     public static function loginSession($u,$s)
     {
-global $sessiontimeout;
+        global $sessiontimeout;
         $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND sessionID=\''.$s.'\';';
         if(!$v = User::login($query))return false;
-if(time()-$v->session > $sessiontimeout)return false;
-return $v;
+        if(time()-$v->session > $sessiontimeout)return false;
+        return $v;
 
     }
     private static function login($query)
     {
         $sql=User::connect();
         $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
-echo $query;
-echo $results->num_rows;
+        echo $query;
+        echo $results->num_rows;
         if ($results->num_rows != 1) return false;
         return new User($results->fetch_assoc(),$sql);
     }
