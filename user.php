@@ -1,5 +1,5 @@
 <?php
-
+ 
 /**
 Stores information about a user and interacts with mySQL database to modify persistent user data.
 */
