@@ -59,18 +59,19 @@ class User {
       @param $e email (optional)
      */
     public static function create($u, $p, $e) {
-        global $mysql_server, $mysql_username, $mysql_password;
-        $sql = new mysqli($mysql_server, $mysql_username, $mysql_password);
+        global $database_name, $mysql_server, $mysql_username, $mysql_password;
+        $sql = new mysqli($mysql_server, $mysql_username, $mysql_password,$database_name);
         if ($sql->connect_errno)
             die('Failed to connect to MySQL: ' . $mysqli->connect_error);
 
-        $query = 'SELECT * FROM users WHERE usr=\'$u\'';
-        $results = $sql->query($query);
+        $query = 'SELECT * FROM users WHERE usr=\''.$u.'\';';
+echo $query;
+        $results = $sql->query($query) or die('MySQL Error: ' . $sql->connect_error);
         if ($results->num_rows != 0)
             throw new Exception('User creation failed: User already exists');
 
         $password = User::hash($p);
-        $email = isset($e) ? '$e' : 'null';
+        $email = isset($e) ? $e : 'null';
         $query = 'INSERT INTO users (usr,pwd,email)
                VALUES (\'' . $u . '\',\'' . $password . '\',\'' . $email . '\');';
         $sql->query($query);
@@ -83,5 +84,5 @@ class User {
 
 }
 
-User::create('wontonst', 'mypassword', 'roy@gmail.com');
+
 ?>
