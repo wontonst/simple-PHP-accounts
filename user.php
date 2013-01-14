@@ -78,8 +78,11 @@ class User {
       @param $op old password
       @param $np new password
      */
-    public function changePassword($u, $op, $np) {
-
+    public static function changePassword($u, $op, $np) {
+if($user = !User::loginPassword($u,$op))return false;
+$password = User::hash($np);
+$query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$usr.'\';';
+return true;
     }
 
     /**
