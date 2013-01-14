@@ -14,8 +14,6 @@ $query2=<<<QUERY
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 QUERY;
 
-//die($query1);
-
 $connection = new mysqli($mysql_server,$mysql_username,$mysql_password);
 if($connection->connect_errno)die('Failed to connect to MySQL: '.$mysqli->connect_error);
 
