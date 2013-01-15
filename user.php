@@ -78,18 +78,18 @@ class User {
         if(!$user = User::loginPassword($u,$op))return false;
         $password = User::hash($np);
         $query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$u.'\';';
-var_dump($user);
-$user->query($query);
+        var_dump($user);
+        $user->query($query);
         return true;
     }
-/**
-Performs a direct query to the mySQL database. This method is NOT RECOMMENDED FOR USE unless you know what you're doing.
-@param $query query to be directly sent
-*/
-public function query($query)
-{
-$this->sql->query($query);
-}
+    /**
+    Performs a direct query to the mySQL database. This method is NOT RECOMMENDED FOR USE unless you know what you're doing.
+    @param $query query to be directly sent
+    */
+    public function query($query)
+    {
+        $this->sql->query($query);
+    }
     /**
       Creates a new user
       @param $u username
@@ -112,6 +112,11 @@ $this->sql->query($query);
         global $salt;
         return addslashes(crypt($value, $salt));
     }
+    /**
+    Checks to ese if the uesrname exists.
+    @param $sql mysqli object
+    @param $uesrname username to check for
+    */
     public static function checkUsername($sql,$username) {
         $query = 'SELECT * FROM users WHERE usr=\''.$username.'\';';
         $results = $sql->query($query) or die('MySQL Error: ' . $sql->error);
