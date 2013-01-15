@@ -54,8 +54,7 @@ class User {
     private static function login($query) {
         $sql=User::connect();
         $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
-        echo $query;
-        echo $results->num_rows;
+//echo $query;
         if ($results->num_rows != 1) return false;
         return new User($results->fetch_assoc(),$sql);
     }
@@ -76,12 +75,21 @@ class User {
       @param $np new password
      */
     public static function changePassword($u, $op, $np) {
-        if($user = !User::loginPassword($u,$op))return false;
+        if(!$user = User::loginPassword($u,$op))return false;
         $password = User::hash($np);
-        $query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$usr.'\';';
+        $query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$u.'\';';
+var_dump($user);
+$user->query($query);
         return true;
     }
-
+/**
+Performs a direct query to the mySQL database. This method is NOT RECOMMENDED FOR USE unless you know what you're doing.
+@param $query query to be directly sent
+*/
+public function query($query)
+{
+$this->sql->query($query);
+}
     /**
       Creates a new user
       @param $u username
@@ -118,10 +126,11 @@ class User {
     }
 }
 
-//User::create('roymanz','mypasswords','m@gmail.com');
-//$user = User::loginPassword('roymanz','mypasswords');
+//User::create('roygbiv','mypasswords','m@gmail.com');
+//$user = User::loginPassword('roygbiv','mypasswordss');
 //var_dump($user);
 //var_dump($user->newSession());
 //$user = User::loginSession('roymanz','d3de8305f93266526703f35e94e8c6d3');
 //var_dump($user);
+//echo User::changePassword('roygbiv','mypasswords','mypasswordss');
 ?>
