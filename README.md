@@ -11,3 +11,4 @@ This is intended to work under any environment. If you are using a framework, co
 2. Edit config.php to your likings
 3. run command "php create_tables" to create database with tables
 4. Take a look at sample.php for directions
+

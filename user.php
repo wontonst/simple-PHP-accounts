@@ -78,7 +78,6 @@ class User {
         if(!$user = User::loginPassword($u,$op))return false;
         $password = User::hash($np);
         $query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$u.'\';';
-        var_dump($user);
         $user->query($query);
         return true;
     }
@@ -86,8 +85,7 @@ class User {
     Performs a direct query to the mySQL database. This method is NOT RECOMMENDED FOR USE unless you know what you're doing.
     @param $query query to be directly sent
     */
-    public function query($query)
-    {
+    public function query($query) {
         $this->sql->query($query);
     }
     /**

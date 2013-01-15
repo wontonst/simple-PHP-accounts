@@ -5,17 +5,27 @@ require_once('user.php');
 //IMPORTANT - make sure you edit config.php and run create_table.php first
 
 //create a user
-User::create('myusername','mypassword','myoptionalemail');
+try {
+    User::create('myusername','mypassword','myoptionalemail');
+} catch(Exception $e) {
+//username already taken
+}
 
 //spawn a new session ID valid for 24hrs by default (edit in config)
 $sessionID = User::newSession();
 
 //login with password
-$user_obj = User::loginPassword('myusername','mypassword');
+if(!$user_obj = User::loginPassword('myusername','mypassword')) {
+//login information is bad
+}
 
 //login with sessionID
-$user_obj = User::loginSession('myusername',$sessionID);
+if(!$user_obj = User::loginSession('myusername',$sessionID)) {
+//sessionID given does not match stored sessionID - this should not happen
+}
 
 //changepassword
-User::changePassword('myusername','mypassword','newpassword');
+if(!User::changePassword('myusername','mypassword','newpassword')) {
+//username/password do not match, new password not accepted
+}
 ?>
