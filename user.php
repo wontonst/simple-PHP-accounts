@@ -43,8 +43,7 @@ class User {
         $query = 'SELECT * FROM users WHERE '."usr='$u' AND `pwd`='$password';";
         return User::login($query);
     }
-    public static function loginSession($u,$s)
-    {
+    public static function loginSession($u,$s) {
         global $sessiontimeout;
         $query= 'SELECT * FROM users WHERE usr=\''.$u.'\' AND sessionID=\''.$s.'\';';
         if(!$v = User::login($query))return false;
@@ -52,8 +51,7 @@ class User {
         return $v;
 
     }
-    private static function login($query)
-    {
+    private static function login($query) {
         $sql=User::connect();
         $results = $sql->query($query) or die('MySQL Error line '.__LINE__.': ' . $sql->error);
         echo $query;
@@ -61,8 +59,7 @@ class User {
         if ($results->num_rows != 1) return false;
         return new User($results->fetch_assoc(),$sql);
     }
-    public function newSession()
-    {
+    public function newSession() {
         global $salt;
         $session = md5($this->data['usr'].time().$salt);
         $time = time();
@@ -79,10 +76,10 @@ class User {
       @param $np new password
      */
     public static function changePassword($u, $op, $np) {
-if($user = !User::loginPassword($u,$op))return false;
-$password = User::hash($np);
-$query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$usr.'\';';
-return true;
+        if($user = !User::loginPassword($u,$op))return false;
+        $password = User::hash($np);
+        $query = 'UPDATE users SET `pwd`=\''.$password.'\' WHERE `usr`=\''.$usr.'\';';
+        return true;
     }
 
     /**
@@ -112,8 +109,7 @@ return true;
         $results = $sql->query($query) or die('MySQL Error: ' . $sql->error);
         return ($results->num_rows != 0);
     }
-    public static function connect()
-    {
+    public static function connect() {
         global $database_name, $mysql_server, $mysql_username, $mysql_password;
         $sql = new mysqli($mysql_server, $mysql_username, $mysql_password,$database_name);
         if ($sql->connect_errno)
