@@ -9,9 +9,9 @@ This is intended to work under any environment. If you are using a framework, co
 
 1. Have a PHP/mySQL setup ready
 2. Edit config.php to your likings
-3. run command "php create_tables" to create database with tables
+3. run command "php create_tables.php" to create database with tables
 4. Take a look below or in sample.php for directions
-
+<pre>
     //create a user
     try {
         User::create('myusername','mypassword','myoptionalemail');
@@ -35,4 +35,6 @@ This is intended to work under any environment. If you are using a framework, co
     //changepassword
     if(!User::changePassword('myusername','mypassword','newpassword')) {
     //username/password do not match, new password not accepted
-    
+
+    echo $user_obj->email;//prints out user email
+    </pre>
