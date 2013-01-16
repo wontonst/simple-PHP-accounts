@@ -9,7 +9,7 @@ This is intended to work under any environment. If you are using a framework, co
 
 1. Have a PHP/mySQL setup ready
 2. Edit config.php to your likings
-3. run command "php create_tables" to create database with tables
+3. run command "php create_tables.php" to create database with tables
 4. Take a look below or in sample.php for directions
 
     //create a user
