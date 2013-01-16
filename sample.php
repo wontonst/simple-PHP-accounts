@@ -28,4 +28,6 @@ if(!$user_obj = User::loginSession('myusername',$sessionID)) {
 if(!User::changePassword('myusername','mypassword','newpassword')) {
 //username/password do not match, new password not accepted
 }
+
+echo $user_obj->email;//prints out user email
 ?>
