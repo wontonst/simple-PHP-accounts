@@ -35,4 +35,6 @@ This is intended to work under any environment. If you are using a framework, co
     //changepassword
     if(!User::changePassword('myusername','mypassword','newpassword')) {
     //username/password do not match, new password not accepted
+
+    echo $user_obj->email;//prints out user email
     </pre>
