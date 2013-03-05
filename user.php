@@ -111,7 +111,7 @@ class User {
         return addslashes(crypt($value, $salt));
     }
     /**
-    Checks to ese if the uesrname exists.
+    Checks to see if the uesrname exists.
     @param $sql mysqli object
     @param $uesrname username to check for
     */
